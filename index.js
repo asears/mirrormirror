@@ -4,8 +4,8 @@ const wasmModule = './LightReflection.wasm';
   const imports = {
     env: {
       memory: new WebAssembly.Memory({ initial: 256, maximum: 256 }),
-      _malloc: () => {},
-      _free: () => {}
+      _malloc: (size) => instance.exports._malloc(size),
+      _free: (ptr) => instance.exports._free(ptr)
     }
   };
 
