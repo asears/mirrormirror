@@ -17,13 +17,14 @@ const wasmModule = './LightReflection.wasm';
   const rxPtr = malloc(8);
   const ryPtr = malloc(8);
 
-  instance.exports._memcpy(rxPtr, resultX.byteOffset, 8);
-  instance.exports._memcpy(ryPtr, resultY.byteOffset, 8);
+  // Copy the memory from the result arrays to the allocated pointers
+  new Uint8Array(instance.exports.memory.buffer).set(new Uint8Array(resultX.buffer), rxPtr);
+  new Uint8Array(instance.exports.memory.buffer).set(new Uint8Array(resultY.buffer), ryPtr);
 
   calculateReflection(incidentX, incidentY, normalX, normalY, rxPtr, ryPtr);
 
-  resultX[0] = instance.exports._getValue(rxPtr, 'double');
-  resultY[0] = instance.exports._getValue(ryPtr, 'double');
+  resultX[0] = new Float64Array(instance.exports.memory.buffer, rxPtr, 1)[0];
+  resultY[0] = new Float64Array(instance.exports.memory.buffer, ryPtr, 1)[0];
 
   free(rxPtr);
   free(ryPtr);
