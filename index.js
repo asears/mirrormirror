@@ -1,7 +1,15 @@
 const wasmModule = './LightReflection.wasm';
 
 (async () => {
-  const { instance } = await WebAssembly.instantiateStreaming(fetch(wasmModule));
+  const imports = {
+    env: {
+      memory: new WebAssembly.Memory({ initial: 256, maximum: 256 }),
+      _malloc: () => {},
+      _free: () => {}
+    }
+  };
+
+  const { instance } = await WebAssembly.instantiateStreaming(fetch(wasmModule), imports);
   const calculateReflection = instance.exports._CalculateReflection;
   const malloc = instance.exports._malloc;
   const free = instance.exports._free;
