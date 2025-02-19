@@ -15,3 +15,8 @@ extern "C" {
         free(ptr);
     }
 }
+
+int main() {
+    // This main function is required for WebAssembly compilation.
+    return 0;
+}
