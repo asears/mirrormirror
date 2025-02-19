@@ -1570,3 +1570,6 @@ run();
 
 // end include: postamble.js
 
+// Add _malloc to the list of exported functions
+var _malloc = Module['_malloc'] = createExportWrapper('malloc', 1);
+
