@@ -754,9 +754,8 @@ async function instantiateAsync(binary, binaryFile, imports) {
 function getWasmImports() {
   // prepare imports
   return {
-    'env': wasmImports,
-    'wasi_snapshot_preview1': wasmImports,
-  }
+    'env': wasmImports
+  };
 }
 
 // Create the wasm instance.
